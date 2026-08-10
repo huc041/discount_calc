@@ -1,21 +1,28 @@
-import com.learning.discount_calculator.source.Order;
-import com.learning.discount_calculator.source.OrderSourceFactory;
-import com.learning.discount_calculator.source.OrderSourceInterface;
+import com.learning.discount_calculator.Model.Order;
+import com.learning.discount_calculator.Source.OrderSourceFactory;
+import com.learning.discount_calculator.Source.OrderSourceInterface;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Path pathFile1 = Paths.get("discount_day.txt");
-        Path pathFile2 = Paths.get("discount_day_without_ext");
 
-        OrderSourceInterface orderSourceInterface = OrderSourceFactory.create(pathFile2);
+        Path pathFile1 = Paths.get(
+                "src/main/java/com/learning/discount_calculator/Resources/discount_day.txt"
+        );
+        Path pathFile2 = Paths.get(
+                "src/main/java/com/learning/discount_calculator/Resources/discount_day_without_ext"
+        );
+
+        OrderSourceInterface orderSourceInterface = OrderSourceFactory.create(pathFile1);
         List<Order> orders = orderSourceInterface.read();
+        orders.sort(Comparator.comparing(Order::getOrderDate));
         for(Order order: orders){
-            System.out.println(order.getCompanyMane());
+            System.out.println(order.getCompanyMane() +" - " + order.getOrderDate().toString());
         }
 
         // OrderSourceFactory вызываем метод с параметром Path файла, в ответ

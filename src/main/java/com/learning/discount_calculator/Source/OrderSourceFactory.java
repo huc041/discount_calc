@@ -1,4 +1,4 @@
-package com.learning.discount_calculator.source;
+package com.learning.discount_calculator.Source;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
