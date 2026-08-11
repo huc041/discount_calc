@@ -44,6 +44,4 @@ abstract class AbstractDelimitedOrderSource implements OrderSourceInterface {
         }
         return orders;
     }
-
-
 }
