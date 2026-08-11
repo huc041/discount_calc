@@ -32,26 +32,23 @@ public class DiscountCalculator {
         this.unitPrice = unitPrice;
     }
 
-    Map<String, BigDecimal> calculateDiscount (List<Order> orders){
-        orders.sort(Comparator.comparing(Order::getOrderDate)); // сортировали заказы по дате
-        Map<String, BigDecimal> companyTotalPricesMap = new HashMap<>();
+    public Map<String, BigDecimal> calculateDiscount (List<Order> orders){
+        orders.sort(Comparator.comparing(Order::getOrderDate)); // 1. сортировали заказы по дате - чтобы все получили корректную скидку
+        Map<String, BigDecimal> companyTotalPricesMap = new HashMap<>(); // 2. Создали Map(companyName, totalPrice) - чтобы хранить по каждой компании итоговую сумму для всез заказов
         for (Order order:orders){
             // у заказа проверяем есть ли эта компания в Map
             // нет - создаем элемент с ключем currentCompany, инициализируем Value нулем
-            if (!companyTotalPricesMap.containsKey(order.getCompanyMane())) {
-                companyTotalPricesMap.put(order.getCompanyMane(), new BigDecimal(0.0));
+            if (!companyTotalPricesMap.containsKey(order.getCompanyName())) {
+                companyTotalPricesMap.put(order.getCompanyName(), BigDecimal.ZERO);
             }
+            BigDecimal totalPrice = companyTotalPricesMap.get(order.getCompanyName()); // получаем текущую totalPrice компании
+            BigDecimal factor = (BigDecimal.valueOf(1.0)).subtract(discount); // множитель как (1 - размер скидки)
 
-            BigDecimal companyInMapTotalPrice = companyTotalPricesMap.get(order.getCompanyMane());
-            companyInMapTotalPrice.add(discount.multiply(BigDecimal.valueOf(order.getCementAmount())));
-            companyTotalPricesMap.put(order.getCompanyMane(), companyInMapTotalPrice);
+            BigDecimal calcPriceWithDiscount = factor.multiply(BigDecimal.valueOf(order.getCementAmount())).multiply(unitPrice);
 
-            discount = discount.subtract(stepDiscount).max(BigDecimal.ZERO); // уменьшаем, но не меньше нуля
-
-            // 50% - первая скидка  50 - 0*step
-            // 45% - вторая скидка  50 - 1*step
-            // 40% - третья скидка  50 - 2*step
-            // if currentDiscount <=0 (currentDiscount =0)
+            totalPrice = totalPrice.add(calcPriceWithDiscount);
+            companyTotalPricesMap.put(order.getCompanyName(), totalPrice); // обновляем totalPrice в Map
+            discount = discount.subtract(stepDiscount).max(BigDecimal.ZERO); // уменьшаем скидку, но не меньше нуля
         }
         return companyTotalPricesMap;
     }

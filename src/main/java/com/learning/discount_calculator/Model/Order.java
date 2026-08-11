@@ -3,14 +3,14 @@ import java.time.LocalDateTime;
 
 public class Order {
 
-    public Order(String companyMane, int cementAmount, LocalDateTime orderDate) {
-        this.companyMane = companyMane;
+    public Order(String companyName, int cementAmount, LocalDateTime orderDate) {
+        this.companyName = companyName;
         this.cementAmount = cementAmount;
         this.orderDate = orderDate;
     }
 
-    public String getCompanyMane() {
-        return companyMane;
+    public String getCompanyName() {
+        return companyName;
     }
 
     public int getCementAmount() {
@@ -25,7 +25,7 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    private String companyMane;
+    private String companyName;
     private int cementAmount;
     private LocalDateTime orderDate;
 }
