@@ -9,6 +9,11 @@ public class TxtOrderSource extends AbstractDelimitedOrderSource {
         return "|";
     }
 
+    @Override
+    protected String datePattern(){
+        return "yyyy-MM-dd'T'HH:mm:ss";
+    }
+
     public TxtOrderSource(Path path) {
         super(path);
     }

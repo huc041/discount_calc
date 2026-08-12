@@ -8,6 +8,11 @@ public class NoExtensionOrderSource extends AbstractDelimitedOrderSource {
         return "#";
     }
 
+    @Override
+    protected String datePattern(){
+        return "yyyy-MM-dd 'T'HH:mm:ss";
+    }
+
     public NoExtensionOrderSource(Path path) {
         super(path);
     }

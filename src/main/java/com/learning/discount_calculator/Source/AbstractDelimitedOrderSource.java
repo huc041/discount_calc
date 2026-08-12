@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 abstract class AbstractDelimitedOrderSource implements OrderSourceInterface {
     private final Path path;
     abstract protected String delimiter();
+    abstract protected String datePattern();
     public AbstractDelimitedOrderSource(Path path) {
         this.path = path;
     }
@@ -27,7 +28,8 @@ abstract class AbstractDelimitedOrderSource implements OrderSourceInterface {
                 if (s.contains(sep)) {
                     List<String> parts = List.of(s.split(Pattern.quote(sep)));
                     if (!parts.isEmpty() && parts.size() >= 2) {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+                        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern());
                         LocalDateTime time = LocalDateTime.parse((String) parts.get(0), formatter);
 
                         String company = parts.get(1);
