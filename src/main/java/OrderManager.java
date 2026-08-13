@@ -1,6 +1,6 @@
 import com.learning.discount_calculator.model.Order;
 import com.learning.discount_calculator.output.OrderFileService;
-import com.learning.discount_calculator.pricing.DiscountCalculator;
+import com.learning.discount_calculator.service.OrderService;
 import com.learning.discount_calculator.source.OrderSourceFactory;
 import com.learning.discount_calculator.source.OrderSourceInterface;
 
@@ -26,8 +26,8 @@ public class OrderManager {
         OrderSourceInterface orderSourceInterface = OrderSourceFactory.create(pathIn);
         List<Order> orders = orderSourceInterface.read();
 
-        DiscountCalculator discountCalculator = new DiscountCalculator(startDiscount, stepDiscount, unitPrice);
-        Map<String, BigDecimal> finalMap = discountCalculator.calculateDiscount(orders);
+        OrderService orderService = new OrderService(startDiscount, stepDiscount, unitPrice);
+        Map<String, BigDecimal> finalMap = orderService.calculateDiscount(orders);
 
         OrderFileService rw = new OrderFileService();
         rw.writeOrderTotals(finalMap, pathOut);

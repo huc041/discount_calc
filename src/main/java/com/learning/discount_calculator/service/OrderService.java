@@ -1,4 +1,4 @@
-package com.learning.discount_calculator.pricing;
+package com.learning.discount_calculator.service;
 
 import com.learning.discount_calculator.model.Order;
 
@@ -8,13 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DiscountCalculator {
+public class OrderService {
 
     private BigDecimal discount;
     private BigDecimal stepDiscount;
     private BigDecimal unitPrice;
 
-    public DiscountCalculator (BigDecimal discount, BigDecimal stepDiscount, BigDecimal unitPrice) {
+    public OrderService(BigDecimal discount, BigDecimal stepDiscount, BigDecimal unitPrice) {
         this.discount = discount;
         this.stepDiscount = stepDiscount;
         this.unitPrice = unitPrice;
