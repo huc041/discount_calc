@@ -17,27 +17,18 @@ public class OrderManager {
     private Path pathIn;
     private Path pathOut;
 
-    private BigDecimal discount;
-    private BigDecimal step;
-    private BigDecimal unitPrice;
-
-    public OrderManager (Path pathInput, Path pathOuput, BigDecimal startDiscount, BigDecimal stepDiscount, BigDecimal unitPrice){
+    public OrderManager (Path pathInput, Path pathOuput){
 
         this.pathIn = pathInput;
         this.pathOut = pathOuput;
-
-        this.discount = startDiscount;
-        this.step = stepDiscount;
-        this.unitPrice = unitPrice;
     }
 
-    public void processMethod() throws IOException {
+    public void processMethod(BigDecimal startDiscount, BigDecimal stepDiscount, BigDecimal unitPrice) throws IOException {
 
         OrderSourceInterface orderSourceInterface = OrderSourceFactory.create(pathIn);
         List<Order> orders = orderSourceInterface.read();
-        orders.sort(Comparator.comparing(Order::getOrderDate));
 
-        DiscountCalculator discountCalculator = new DiscountCalculator(BigDecimal.valueOf(0.5), BigDecimal.valueOf(0.05), BigDecimal.valueOf(10.0));
+        DiscountCalculator discountCalculator = new DiscountCalculator(startDiscount, stepDiscount, unitPrice);
         Map<String, BigDecimal> finalMap = discountCalculator.calculateDiscount(orders);
 
         ResultWriter rw = new ResultWriter();

@@ -33,6 +33,7 @@ public class DiscountCalculator {
     }
 
     public Map<String, BigDecimal> calculateDiscount (List<Order> orders){
+
         orders.sort(Comparator.comparing(Order::getOrderDate)); // 1. сортировали заказы по дате - чтобы все получили корректную скидку
         Map<String, BigDecimal> companyTotalPricesMap = new HashMap<>(); // 2. Создали Map(companyName, totalPrice) - чтобы хранить по каждой компании итоговую сумму для всез заказов
         for (Order order:orders){
