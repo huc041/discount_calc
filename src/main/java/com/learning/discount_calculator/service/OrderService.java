@@ -34,22 +34,20 @@ public class OrderService {
 
     public Map<String, BigDecimal> calculateDiscount (List<Order> orders){
 
-        orders.sort(Comparator.comparing(Order::getOrderDate)); // 1. сортировали заказы по дате - чтобы все получили корректную скидку
-        Map<String, BigDecimal> companyTotalPricesMap = new HashMap<>(); // 2. Создали Map(companyName, totalPrice) - чтобы хранить по каждой компании итоговую сумму для всез заказов
+        orders.sort(Comparator.comparing(Order::getOrderDate));
+        Map<String, BigDecimal> companyTotalPricesMap = new HashMap<>();
         for (Order order:orders){
-            // у заказа проверяем есть ли эта компания в Map
-            // нет - создаем элемент с ключем currentCompany, инициализируем Value нулем
             if (!companyTotalPricesMap.containsKey(order.getCompanyName())) {
                 companyTotalPricesMap.put(order.getCompanyName(), BigDecimal.ZERO);
             }
-            BigDecimal totalPrice = companyTotalPricesMap.get(order.getCompanyName()); // получаем текущую totalPrice компании
-            BigDecimal factor = (BigDecimal.valueOf(1.0)).subtract(discount); // множитель как (1 - размер скидки)
+            BigDecimal totalPrice = companyTotalPricesMap.get(order.getCompanyName());
+            BigDecimal factor = (BigDecimal.valueOf(1.0)).subtract(discount);
 
             BigDecimal calcPriceWithDiscount = factor.multiply(BigDecimal.valueOf(order.getCementAmount())).multiply(unitPrice);
 
             totalPrice = totalPrice.add(calcPriceWithDiscount);
-            companyTotalPricesMap.put(order.getCompanyName(), totalPrice); // обновляем totalPrice в Map
-            discount = discount.subtract(stepDiscount).max(BigDecimal.ZERO); // уменьшаем скидку, но не меньше нуля
+            companyTotalPricesMap.put(order.getCompanyName(), totalPrice);
+            discount = discount.subtract(stepDiscount).max(BigDecimal.ZERO);
         }
         return companyTotalPricesMap;
     }

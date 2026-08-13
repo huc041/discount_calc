@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.util.Map;
 
 public class OrderFileService {
-    // по одной строке на компанию в формате <название компании> - <суммарная стоимость>.
     public void writeOrderTotals(Map<String, BigDecimal> companyTotals, Path resultPath){
 
         try (BufferedWriter writer = Files.newBufferedWriter(resultPath)) {

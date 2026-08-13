@@ -28,7 +28,7 @@ abstract class AbstractDelimitedOrderSource implements OrderFileAdapter {
                 if (s.contains(sep)) {
                     List<String> parts = List.of(s.split(Pattern.quote(sep)));
                     if (!parts.isEmpty() && parts.size() >= 2) {
-                        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern());
                         LocalDateTime time = LocalDateTime.parse((String) parts.get(0), formatter);
 
