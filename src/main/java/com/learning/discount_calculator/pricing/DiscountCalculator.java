@@ -1,6 +1,6 @@
-package com.learning.discount_calculator.Pricing;
+package com.learning.discount_calculator.pricing;
 
-import com.learning.discount_calculator.Model.Order;
+import com.learning.discount_calculator.model.Order;
 
 import java.math.BigDecimal;
 import java.util.Comparator;

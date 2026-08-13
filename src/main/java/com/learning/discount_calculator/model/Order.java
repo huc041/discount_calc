@@ -1,4 +1,4 @@
-package com.learning.discount_calculator.Model;
+package com.learning.discount_calculator.model;
 import java.time.LocalDateTime;
 
 public class Order {

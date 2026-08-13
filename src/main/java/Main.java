@@ -1,8 +1,8 @@
-import com.learning.discount_calculator.Model.Order;
-import com.learning.discount_calculator.Output.ResultWriter;
-import com.learning.discount_calculator.Pricing.DiscountCalculator;
-import com.learning.discount_calculator.Source.OrderSourceFactory;
-import com.learning.discount_calculator.Source.OrderSourceInterface;
+import com.learning.discount_calculator.model.Order;
+import com.learning.discount_calculator.output.ResultWriter;
+import com.learning.discount_calculator.pricing.DiscountCalculator;
+import com.learning.discount_calculator.source.OrderSourceFactory;
+import com.learning.discount_calculator.source.OrderSourceInterface;
 
 import java.io.IOException;
 import java.math.BigDecimal;
