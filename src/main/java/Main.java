@@ -17,6 +17,6 @@ public class Main {
         BigDecimal unitPrice = BigDecimal.valueOf(10.0);
 
         OrderManager orderManager = new OrderManager(pathInput, pathOutput);
-        orderManager.processMethod(discount, stepDiscount,unitPrice);
+        orderManager.process(discount, stepDiscount,unitPrice);
     }
 }

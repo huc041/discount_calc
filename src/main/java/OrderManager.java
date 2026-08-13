@@ -7,8 +7,6 @@ import com.learning.discount_calculator.source.OrderSourceInterface;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +21,7 @@ public class OrderManager {
         this.pathOut = pathOuput;
     }
 
-    public void processMethod(BigDecimal startDiscount, BigDecimal stepDiscount, BigDecimal unitPrice) throws IOException {
+    public void process (BigDecimal startDiscount, BigDecimal stepDiscount, BigDecimal unitPrice) throws IOException {
 
         OrderSourceInterface orderSourceInterface = OrderSourceFactory.create(pathIn);
         List<Order> orders = orderSourceInterface.read();
