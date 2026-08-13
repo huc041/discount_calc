@@ -2,7 +2,7 @@ import com.learning.discount_calculator.model.Order;
 import com.learning.discount_calculator.output.OrderFileService;
 import com.learning.discount_calculator.service.OrderService;
 import com.learning.discount_calculator.source.OrderSourceFactory;
-import com.learning.discount_calculator.source.OrderSourceInterface;
+import com.learning.discount_calculator.source.OrderFileAdapter;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -23,8 +23,8 @@ public class OrderManager {
 
     public void process (BigDecimal startDiscount, BigDecimal stepDiscount, BigDecimal unitPrice) throws IOException {
 
-        OrderSourceInterface orderSourceInterface = OrderSourceFactory.create(pathIn);
-        List<Order> orders = orderSourceInterface.read();
+        OrderFileAdapter orderFileAdapter = OrderSourceFactory.create(pathIn);
+        List<Order> orders = orderFileAdapter.read();
 
         OrderService orderService = new OrderService(startDiscount, stepDiscount, unitPrice);
         Map<String, BigDecimal> finalMap = orderService.calculateDiscount(orders);

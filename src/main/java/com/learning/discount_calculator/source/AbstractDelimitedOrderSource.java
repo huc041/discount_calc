@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-abstract class AbstractDelimitedOrderSource implements OrderSourceInterface {
+abstract class AbstractDelimitedOrderSource implements OrderFileAdapter {
     private final Path path;
     abstract protected String delimiter();
     abstract protected String datePattern();

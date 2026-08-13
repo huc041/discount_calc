@@ -2,7 +2,7 @@ package com.learning.discount_calculator.source;
 
 import java.nio.file.Path;
 
-public class NoExtensionOrderSource extends AbstractDelimitedOrderSource {
+public class NoExtensionOrderFileAdapter extends AbstractDelimitedOrderSource {
     @Override
     protected String delimiter() {
         return "#";
@@ -13,7 +13,7 @@ public class NoExtensionOrderSource extends AbstractDelimitedOrderSource {
         return "yyyy-MM-dd 'T'HH:mm:ss";
     }
 
-    public NoExtensionOrderSource(Path path) {
+    public NoExtensionOrderFileAdapter(Path path) {
         super(path);
     }
 }
