@@ -1,5 +1,5 @@
 import com.learning.discount_calculator.model.Order;
-import com.learning.discount_calculator.output.ResultWriter;
+import com.learning.discount_calculator.output.OrderFileService;
 import com.learning.discount_calculator.pricing.DiscountCalculator;
 import com.learning.discount_calculator.source.OrderSourceFactory;
 import com.learning.discount_calculator.source.OrderSourceInterface;
@@ -15,10 +15,10 @@ public class OrderManager {
     private Path pathIn;
     private Path pathOut;
 
-    public OrderManager (Path pathInput, Path pathOuput){
+    public OrderManager (Path pathInput, Path pathOutput){
 
         this.pathIn = pathInput;
-        this.pathOut = pathOuput;
+        this.pathOut = pathOutput;
     }
 
     public void process (BigDecimal startDiscount, BigDecimal stepDiscount, BigDecimal unitPrice) throws IOException {
@@ -29,8 +29,8 @@ public class OrderManager {
         DiscountCalculator discountCalculator = new DiscountCalculator(startDiscount, stepDiscount, unitPrice);
         Map<String, BigDecimal> finalMap = discountCalculator.calculateDiscount(orders);
 
-        ResultWriter rw = new ResultWriter();
-        rw.writeDataToFile(finalMap, pathOut);
+        OrderFileService rw = new OrderFileService();
+        rw.writeOrderTotals(finalMap, pathOut);
     }
 }
 

@@ -7,13 +7,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 
-public class ResultWriter {
+public class OrderFileService {
     // по одной строке на компанию в формате <название компании> - <суммарная стоимость>.
-    public void writeDataToFile(Map<String, BigDecimal> objectsMap, Path resultPath){
+    public void writeOrderTotals(Map<String, BigDecimal> companyTotals, Path resultPath){
 
         try (BufferedWriter writer = Files.newBufferedWriter(resultPath)) {
-            for (String company: objectsMap.keySet()) {
-                String line = company.concat("-").concat(objectsMap.get(company).toString());
+            for (String company: companyTotals.keySet()) {
+                String line = company.concat("-").concat(companyTotals.get(company).toString());
                 System.out.println(line);
                 writer.write(line);
                 writer.newLine();
