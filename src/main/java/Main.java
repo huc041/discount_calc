@@ -1,16 +1,7 @@
-import com.learning.discount_calculator.model.Order;
-import com.learning.discount_calculator.output.ResultWriter;
-import com.learning.discount_calculator.pricing.DiscountCalculator;
-import com.learning.discount_calculator.source.OrderSourceFactory;
-import com.learning.discount_calculator.source.OrderSourceInterface;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -22,15 +13,10 @@ public class Main {
                 "src/main/java/com/learning/discount_calculator/Resources/discount_day_without_ext"
         );
 
-        OrderSourceInterface orderSourceInterface = OrderSourceFactory.create(pathFile1);
-        List<Order> orders = orderSourceInterface.read();
-        orders.sort(Comparator.comparing(Order::getOrderDate));
+        Path pathOutput = Paths.get("result.txt");
 
-        DiscountCalculator discountCalculator = new DiscountCalculator(BigDecimal.valueOf(0.5), BigDecimal.valueOf(0.05), BigDecimal.valueOf(10.0));
-        Map <String, BigDecimal> finalMap = discountCalculator.calculateDiscount(orders);
-
-        Path pathFile = Paths.get("result.txt");
-        ResultWriter rw = new ResultWriter();
-        rw.writeDataToFile(finalMap, pathFile);
+        OrderManager orderManager;
+        orderManager = new OrderManager(pathFile1, pathOutput, BigDecimal.valueOf(0.5), BigDecimal.valueOf(0.05),BigDecimal.valueOf(10.0));
+        orderManager.processMethod();
     }
 }
