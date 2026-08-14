@@ -26,9 +26,7 @@ public class OrderManager {
         List<Order> orders = orderFileAdapter.read();
 
         Map<String, BigDecimal> finalMap = orderService.calculateDiscount(orders, startDiscount, stepDiscount, unitPrice);
-
-        OrderFileService rw = new OrderFileService();
-        rw.writeOrderTotals(finalMap, pathOutput);
+        orderFileService.writeOrderTotals(finalMap, pathOutput);
     }
 }
 
