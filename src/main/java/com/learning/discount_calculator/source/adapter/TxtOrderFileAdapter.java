@@ -2,7 +2,7 @@ package com.learning.discount_calculator.source.adapter;
 
 import java.nio.file.Path;
 
-public class TxtOrderFileAdapter extends AbstractDelimitedOrderSource {
+public class TxtOrderFileAdapter extends AbstractDelimitedOrderAdapter {
 
     @Override
     protected String delimiter() {

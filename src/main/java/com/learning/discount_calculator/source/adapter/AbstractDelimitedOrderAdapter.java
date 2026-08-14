@@ -1,7 +1,6 @@
 package com.learning.discount_calculator.source.adapter;
 
 import com.learning.discount_calculator.model.Order;
-import com.learning.discount_calculator.source.OrderFileAdapter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-abstract class AbstractDelimitedOrderSource implements OrderFileAdapter {
+abstract class AbstractDelimitedOrderAdapter implements OrderFileAdapter {
     private final Path path;
     abstract protected String delimiter();
     abstract protected String datePattern();
-    public AbstractDelimitedOrderSource(Path path) {
+    public AbstractDelimitedOrderAdapter(Path path) {
         this.path = path;
     }
 

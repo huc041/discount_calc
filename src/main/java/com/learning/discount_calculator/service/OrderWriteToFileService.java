@@ -1,4 +1,6 @@
-package com.learning.discount_calculator.output;
+package com.learning.discount_calculator.service;
+
+import com.learning.discount_calculator.exceptions.WriteOrderIOException;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -7,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 
-public class OrderFileService {
+public class OrderWriteToFileService {
     public void writeOrderTotals(Map<String, BigDecimal> companyTotals, Path resultPath) throws WriteOrderIOException {
 
         try (BufferedWriter writer = Files.newBufferedWriter(resultPath)) {

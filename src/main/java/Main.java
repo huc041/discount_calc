@@ -1,6 +1,6 @@
-import com.learning.discount_calculator.output.OrderFileService;
-import com.learning.discount_calculator.service.OrderManager;
-import com.learning.discount_calculator.service.OrderService;
+import com.learning.discount_calculator.service.OrderWriteToFileService;
+import com.learning.discount_calculator.manager.OrderManager;
+import com.learning.discount_calculator.service.OrderReadService;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -20,10 +20,10 @@ public class Main {
         BigDecimal stepDiscount = BigDecimal.valueOf(0.05);
         BigDecimal unitPrice = BigDecimal.valueOf(10.0);
 
-        OrderService orderService = new OrderService();
-        OrderFileService orderFileService = new OrderFileService();
+        OrderReadService orderReadService = new OrderReadService();
+        OrderWriteToFileService orderFileService = new OrderWriteToFileService();
 
-        OrderManager orderManager = new OrderManager(orderService, orderFileService);
+        OrderManager orderManager = new OrderManager(orderReadService, orderFileService);
         orderManager.process(pathInput, pathOutput, discount, stepDiscount,unitPrice);
     }
 }

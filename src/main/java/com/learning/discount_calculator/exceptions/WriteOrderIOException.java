@@ -1,4 +1,4 @@
-package com.learning.discount_calculator.output;
+package com.learning.discount_calculator.exceptions;
 
 import java.io.IOException;
 

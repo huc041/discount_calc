@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrderService {
+public class OrderReadService {
 
     public Map<String, BigDecimal> calculateDiscount (List<Order> orders, BigDecimal discount, BigDecimal stepDiscount, BigDecimal unitPrice){
 
