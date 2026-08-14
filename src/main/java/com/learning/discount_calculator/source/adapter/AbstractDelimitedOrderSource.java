@@ -1,6 +1,7 @@
-package com.learning.discount_calculator.source;
+package com.learning.discount_calculator.source.adapter;
 
 import com.learning.discount_calculator.model.Order;
+import com.learning.discount_calculator.source.OrderFileAdapter;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,6 +1,7 @@
+package com.learning.discount_calculator.service;
+
 import com.learning.discount_calculator.model.Order;
 import com.learning.discount_calculator.output.OrderFileService;
-import com.learning.discount_calculator.service.OrderService;
 import com.learning.discount_calculator.source.OrderSourceFactory;
 import com.learning.discount_calculator.source.OrderFileAdapter;
 
@@ -11,26 +12,23 @@ import java.util.List;
 import java.util.Map;
 
 public class OrderManager {
+    private final OrderService orderService;
+    private final OrderFileService orderFileService;
 
-    private Path pathIn;
-    private Path pathOut;
-
-    public OrderManager (Path pathInput, Path pathOutput){
-
-        this.pathIn = pathInput;
-        this.pathOut = pathOutput;
+    public OrderManager(OrderService orderService, OrderFileService orderFileService) {
+        this.orderService = orderService;
+        this.orderFileService= orderFileService;
     }
 
-    public void process (BigDecimal startDiscount, BigDecimal stepDiscount, BigDecimal unitPrice) throws IOException {
+    public void process (Path pathInput, Path pathOutput, BigDecimal startDiscount, BigDecimal stepDiscount, BigDecimal unitPrice) throws IOException {
 
-        OrderFileAdapter orderFileAdapter = OrderSourceFactory.create(pathIn);
+        OrderFileAdapter orderFileAdapter = OrderSourceFactory.create(pathInput);
         List<Order> orders = orderFileAdapter.read();
 
-        OrderService orderService = new OrderService();
         Map<String, BigDecimal> finalMap = orderService.calculateDiscount(orders, startDiscount, stepDiscount, unitPrice);
 
         OrderFileService rw = new OrderFileService();
-        rw.writeOrderTotals(finalMap, pathOut);
+        rw.writeOrderTotals(finalMap, pathOutput);
     }
 }
 
