@@ -11,8 +11,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         Path pathInput = Paths.get(
-                "src/main/java/com/learning/discount_calculator/Resources/discount_day.txt"
-                //"src/main/java/com/learning/discount_calculator/Resources/discount_day_without_ext"
+                //"src/main/resources/discount_day.txt"
+                "src/main/resources/discount_day_without_ext"
         );
         Path pathOutput = Paths.get("result.txt");
 
