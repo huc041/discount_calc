@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.util.Map;
 
 public class OrderFileService {
-    public void writeOrderTotals(Map<String, BigDecimal> companyTotals, Path resultPath){
+    public void writeOrderTotals(Map<String, BigDecimal> companyTotals, Path resultPath) throws WriteOrderIOException {
 
         try (BufferedWriter writer = Files.newBufferedWriter(resultPath)) {
             for (String company: companyTotals.keySet()) {
@@ -18,7 +18,7 @@ public class OrderFileService {
                 writer.newLine();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new WriteOrderIOException("Ошибка записи в файл", e);
         }
     }
 }
