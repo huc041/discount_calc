@@ -10,29 +10,7 @@ import java.util.Map;
 
 public class OrderService {
 
-    private BigDecimal discount;
-    private BigDecimal stepDiscount;
-    private BigDecimal unitPrice;
-
-    public OrderService(BigDecimal discount, BigDecimal stepDiscount, BigDecimal unitPrice) {
-        this.discount = discount;
-        this.stepDiscount = stepDiscount;
-        this.unitPrice = unitPrice;
-    }
-
-    public void setDiscount(BigDecimal discount) {
-        this.discount = discount;
-    }
-
-    public void setStepDiscount(BigDecimal stepDiscount) {
-            this.stepDiscount = stepDiscount;
-    }
-
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public Map<String, BigDecimal> calculateDiscount (List<Order> orders){
+    public Map<String, BigDecimal> calculateDiscount (List<Order> orders, BigDecimal discount, BigDecimal stepDiscount, BigDecimal unitPrice){
 
         orders.sort(Comparator.comparing(Order::getOrderDate));
         Map<String, BigDecimal> companyTotalPricesMap = new HashMap<>();

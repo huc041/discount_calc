@@ -26,8 +26,8 @@ public class OrderManager {
         OrderFileAdapter orderFileAdapter = OrderSourceFactory.create(pathIn);
         List<Order> orders = orderFileAdapter.read();
 
-        OrderService orderService = new OrderService(startDiscount, stepDiscount, unitPrice);
-        Map<String, BigDecimal> finalMap = orderService.calculateDiscount(orders);
+        OrderService orderService = new OrderService();
+        Map<String, BigDecimal> finalMap = orderService.calculateDiscount(orders, startDiscount, stepDiscount, unitPrice);
 
         OrderFileService rw = new OrderFileService();
         rw.writeOrderTotals(finalMap, pathOut);
