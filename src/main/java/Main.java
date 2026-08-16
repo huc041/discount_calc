@@ -14,7 +14,7 @@ public class Main {
                 //"src/main/resources/discount_day.txt"
                 "src/main/resources/discount_day_without_ext"
         );
-        Path pathOutput = Paths.get("result.txt");
+        Path pathOutput = Paths.get("src/main/resources/result.txt");
 
         BigDecimal discount = BigDecimal.valueOf(0.5);
         BigDecimal stepDiscount = BigDecimal.valueOf(0.05);
