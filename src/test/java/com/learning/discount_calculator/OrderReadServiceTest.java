@@ -12,34 +12,60 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OrderReadServiceTest {
+    private final OrderReadService orderReadService = new OrderReadService();
+    private final ArrayList<Order> orders = new ArrayList<Order>();
+
+
+    private static final BigDecimal START = new BigDecimal("0.2");
+    private static final BigDecimal STEP = new BigDecimal("0.1");
+    private static final BigDecimal PRICE = new BigDecimal("10");
+
+    private Order order(String company, int kg, String dateTime) {
+        return new Order(company, kg, LocalDateTime.parse(dateTime));
+    }
 
     @Test
-    void calculateDiscountTest(){
-        ArrayList<Order> orders = new ArrayList<Order>();
+    void singleOrder() {
+        orders.add(order("Audi", 540, "2026-01-01T10:00:00"));
+        Map<String, BigDecimal> finalMap = orderReadService.calculateDiscount(orders, START, STEP, PRICE);
+        assertEquals(1, finalMap.size());
+        assertEquals(0, new BigDecimal("2700.0").compareTo(finalMap.get("Audi")));
+    }
 
-        Order order1 = new Order("Audi", 540, LocalDateTime.parse("2026-01-01T10:00:00"));
-        Order order2 = new Order("Ford", 450, LocalDateTime.parse("2026-01-01T09:00:00"));
-        Order order3 = new Order("Fiat", 320, LocalDateTime.parse("2026-01-01T11:00:00"));
-        Order order4 = new Order("Reno", 950, LocalDateTime.parse("2026-01-01T08:00:00"));
+    @Test
+    void differentCompaniesTest(){
+        orders.add(order("Audi", 540, "2026-01-01T10:00:00"));
+        orders.add(order("Ford", 450, "2026-01-01T09:55:00"));
+        orders.add(order("Fiat", 320, "2026-01-01T11:14:00"));
+        orders.add(order("Reno", 950, "2025-12-01T18:45:00"));
 
-        orders.add(order1);
-        orders.add(order2);
-        orders.add(order3);
-        orders.add(order4);
-
-        OrderReadService orderReadService = new OrderReadService();
-        Map<String, BigDecimal> finalMap = orderReadService.calculateDiscount(
-                orders,
-                BigDecimal.valueOf(0.5),
-                BigDecimal.valueOf(0.05),
-                BigDecimal.valueOf(10.0));
+        Map<String, BigDecimal> finalMap = orderReadService.calculateDiscount(orders, START, STEP, PRICE);
 
         assertEquals(4, finalMap.size());
-
         assertEquals(0, new BigDecimal("4750.0").compareTo(finalMap.get("Reno")));
         assertEquals(0, new BigDecimal("2475.0").compareTo(finalMap.get("Ford")));
         assertEquals(0, new BigDecimal("3240.0").compareTo(finalMap.get("Audi")));
         assertEquals(0, new BigDecimal("2080.0").compareTo(finalMap.get("Fiat")));
+    }
+
+    @Test
+    void shouldSumTotals_whenSameCompany() {
+        orders.add(order("Fiat", 320, "2026-01-01T22:15:00"));
+        orders.add(order("Fiat", 960, "2027-01-01T02:45:00"));
+
+        Map<String, BigDecimal> finalMap = orderReadService.calculateDiscount(orders, START, STEP, PRICE);
+        assertEquals(0, new BigDecimal("6880.0").compareTo(finalMap.get("Fiat")));
+    }
+
+    @Test
+    void shouldNotGoBelowZeroDiscount() {
+        orders.add(order("Mazda", 320, "2026-10-01T22:15:00")); // 320 * 0.2 * 10
+        orders.add(order("Jaguar", 450, "2027-02-01T02:45:00")); // 450 * 0.1 * 10
+        orders.add(order("BMW", 505, "2027-02-01T03:45:00")); // 505* 10
+        orders.add(order("Lotus", 900, "2027-04-01T02:45:00")); // 900 * 10
+
+        Map<String, BigDecimal> finalMap = orderReadService.calculateDiscount(orders, START, STEP, PRICE);
+        assertEquals(0, new BigDecimal("9000.0").compareTo(finalMap.get("Lotus")));
     }
 }
 
