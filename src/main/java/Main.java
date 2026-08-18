@@ -12,7 +12,8 @@ public class Main {
 
         Path pathInput = Paths.get(
                 //"src/main/resources/discount_day.txt"
-                "src/main/resources/discount_day_without_ext"
+                //"src/main/resources/discount_day_without_ext"
+                "src/main/resources/orders.bak"
         );
         Path pathOutput = Paths.get("src/main/resources/result.txt");
 

@@ -10,7 +10,7 @@ import java.nio.file.Path;
 public class OrderSourceFactory {
     public static OrderFileAdapter create(Path path) {
         if (path == null) {
-            throw new IllegalArgumentException("path is NULL");
+            throw new IllegalArgumentException("Path is NULL");
         }
         if (!Files.isRegularFile(path)) {
             throw new IllegalArgumentException("file does not exist");
@@ -19,7 +19,7 @@ public class OrderSourceFactory {
         if (name.toLowerCase().endsWith(".txt")) {
             return new TxtOrderFileAdapter(path);
         }
-        else if(!name.endsWith(".")) {
+        else if(!name.contains(".")) {
             return new NoExtensionOrderFileAdapter(path);
         }
         else {

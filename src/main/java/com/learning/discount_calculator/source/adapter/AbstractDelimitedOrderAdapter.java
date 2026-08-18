@@ -21,6 +21,7 @@ abstract class AbstractDelimitedOrderAdapter implements OrderFileAdapter {
 
     public List<Order> read() throws IOException {
     List<String> lines = Files.readAllLines(path);
+
     String sep = delimiter();
     ArrayList<Order> orders = new ArrayList<Order>();
         if (!lines.isEmpty()) {

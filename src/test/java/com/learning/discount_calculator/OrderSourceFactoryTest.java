@@ -7,31 +7,45 @@ import com.learning.discount_calculator.source.adapter.TxtOrderFileAdapter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.Files;
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class OrderSourceFactoryTest {
     @Test
-    public void shouldReadTxtFileTest() {
+    public void shouldChooseCorrectTxtAdapter() {
         Path path = Paths.get("src/test/resources/test_orders.txt");
         OrderFileAdapter orderFileAdapter = OrderSourceFactory.create(path);
 
-        Assertions.assertTrue(orderFileAdapter instanceof TxtOrderFileAdapter);
+        Assertions.assertInstanceOf(TxtOrderFileAdapter.class, orderFileAdapter);
     }
 
     @Test
-    public void shouldReadNoExtFileTest() {
+    public void shouldChooseCorrectNoExtAdapter() {
         Path path = Paths.get("src/test/resources/test_no_extension");
         OrderFileAdapter orderFileAdapter = OrderSourceFactory.create(path);
 
-        Assertions.assertTrue(orderFileAdapter instanceof NoExtensionOrderFileAdapter);
+        Assertions.assertInstanceOf(NoExtensionOrderFileAdapter.class, orderFileAdapter);
     }
 
     @Test
-    public void shouldNotFoundFileTest() {
-
+    public void shouldNotFoundFile() {
         Path path = Paths.get("src/test/resources/randomFile.txt");
         Assertions.assertThrows(IllegalArgumentException.class, () -> OrderSourceFactory.create(path));
+    }
+
+    @Test
+    public void shouldShowExceptionForNullPath() {
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> OrderSourceFactory.create(null));
+        Assertions.assertEquals("Path is NULL", thrown.getMessage());
+    }
+
+    @Test
+    public void shouldShowExceptionForUnsupportedFile() {
+        Path path = Paths.get("src/test/resources/orders.bak");
+        System.out.println("file name: " + path.getFileName().toString());
+
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> OrderSourceFactory.create(path));
+        Assertions.assertEquals("unsupported file format: " + path.getFileName().toString(), thrown.getMessage());
     }
 }
