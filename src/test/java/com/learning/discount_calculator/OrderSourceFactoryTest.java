@@ -7,7 +7,6 @@ import com.learning.discount_calculator.source.adapter.TxtOrderFileAdapter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -30,7 +29,7 @@ public class OrderSourceFactoryTest {
 
     @Test
     public void shouldNotFoundFile() {
-        Path path = Paths.get("src/test/resources/randomFile.txt");
+        Path path = Paths.get("definitely-missing-xyz");
         Assertions.assertThrows(IllegalArgumentException.class, () -> OrderSourceFactory.create(path));
     }
 
@@ -43,7 +42,6 @@ public class OrderSourceFactoryTest {
     @Test
     public void shouldShowExceptionForUnsupportedFile() {
         Path path = Paths.get("src/test/resources/orders.bak");
-        System.out.println("file name: " + path.getFileName().toString());
 
         IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> OrderSourceFactory.create(path));
         Assertions.assertEquals("unsupported file format: " + path.getFileName().toString(), thrown.getMessage());

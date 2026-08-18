@@ -19,7 +19,7 @@ public class OrderSourceFactory {
         if (name.toLowerCase().endsWith(".txt")) {
             return new TxtOrderFileAdapter(path);
         }
-        else if(!name.contains(".")) {
+        else if (!name.contains(".")) {
             return new NoExtensionOrderFileAdapter(path);
         }
         else {
