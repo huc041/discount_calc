@@ -1,35 +1,30 @@
-import com.learning.discount_calculator.source.Order;
-import com.learning.discount_calculator.source.OrderSourceFactory;
-import com.learning.discount_calculator.source.OrderSourceInterface;
+import com.learning.discount_calculator.service.OrderWriteToFileService;
+import com.learning.discount_calculator.manager.OrderManager;
+import com.learning.discount_calculator.service.OrderReadService;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Path pathFile1 = Paths.get("discount_day.txt");
-        Path pathFile2 = Paths.get("discount_day_without_ext");
 
-        OrderSourceInterface orderSourceInterface = OrderSourceFactory.create(pathFile2);
-        List<Order> orders = orderSourceInterface.read();
-        for(Order order: orders){
-            System.out.println(order.getCompanyMane());
-        }
+        Path pathInput = Paths.get(
+                //"src/main/resources/discount_day.txt"
+                //"src/main/resources/discount_day_without_ext"
+                "src/main/resources/orders.bak"
+        );
+        Path pathOutput = Paths.get("src/main/resources/result.txt");
 
-        // OrderSourceFactory вызываем метод с параметром Path файла, в ответ
-        // даем коллекцию объектов Orders
+        BigDecimal discount = BigDecimal.valueOf(0.5);
+        BigDecimal stepDiscount = BigDecimal.valueOf(0.05);
+        BigDecimal unitPrice = BigDecimal.valueOf(10.0);
 
-        // конкретный адаптер TxtOrderSource или NoExtensionOrderSource разбирает
-        // файл по разделителям и записывает результат в коллекцию Orders
+        OrderReadService orderReadService = new OrderReadService();
+        OrderWriteToFileService orderFileService = new OrderWriteToFileService();
 
-        // далее должен быть отдельный класс расчета скидок DiscountEstimator,
-        // который принимает объекты Orders и возвращает Map (key - companyName,
-        // value - totalPrice)
-
-        // отдельный класс WriteDataToFile который принимает Map(companyName, totalPrice)
-        // и возвращает например Path файла записи, или boolean переменную с результатом
-        // записи по заранее известному пути
+        OrderManager orderManager = new OrderManager(orderReadService, orderFileService);
+        orderManager.process(pathInput, pathOutput, discount, stepDiscount,unitPrice);
     }
 }
