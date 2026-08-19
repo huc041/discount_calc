@@ -48,4 +48,12 @@ public class TxtOrderFileAdapterTest {
         assertOrder(order,"Dendy",444, LocalDateTime.parse("2026-12-15T13:13:13"));
     }
 
+    @Test
+    public void shouldNotReadFileWithInvalidSeparator() throws IOException {
+        Path path = Paths.get("src/test/resources/invalid_separator_for_txt_file.txt");
+
+        List<Order> read = readTxt(path.toString());
+        assertEquals(0, read.size());
+    }
+
 }
