@@ -15,8 +15,8 @@ public class OrderReadServiceTest {
     private final OrderReadService orderReadService = new OrderReadService();
     private final ArrayList<Order> orders = new ArrayList<Order>();
 
-    private static final BigDecimal START = new BigDecimal("0.2");
-    private static final BigDecimal STEP = new BigDecimal("0.1");
+    private static final BigDecimal START = new BigDecimal("0.5");
+    private static final BigDecimal STEP = new BigDecimal("0.05");
     private static final BigDecimal PRICE = new BigDecimal("10");
 
     private Order order(String company, int kg, String dateTime) {
@@ -58,12 +58,16 @@ public class OrderReadServiceTest {
 
     @Test
     void shouldNotGoBelowZeroDiscount() {
+
+        BigDecimal local_start = new BigDecimal("0.2");
+        BigDecimal local_STEP = new BigDecimal("0.1");
+
         orders.add(order("Mazda", 320, "2026-10-01T22:15:00"));
         orders.add(order("Jaguar", 450, "2027-02-01T02:45:00"));
         orders.add(order("BMW", 505, "2027-02-01T03:45:00"));
         orders.add(order("Lotus", 900, "2027-04-01T02:45:00"));
 
-        Map<String, BigDecimal> finalMap = orderReadService.calculateDiscount(orders, START, STEP, PRICE);
+        Map<String, BigDecimal> finalMap = orderReadService.calculateDiscount(orders, local_start, local_STEP, PRICE);
         assertEquals(0, new BigDecimal("9000.0").compareTo(finalMap.get("Lotus")));
     }
 }
